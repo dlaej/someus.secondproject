@@ -24,25 +24,37 @@
 [부연 설명](https://dlaej.notion.site/jdbc-78f2a3534116483ab0823ef5aeb2cb27?pvs=4)
 
 > **jdbc는 3가지 기능을 표준 인터페이스로 정의하여 제공**
++ java.sql.Connection - 연결
++ java.sql.Statement - SQL을 담은 내용
++ java.sql.ResultSet - SQL 요청 응답
 
-java.sql.Connection - 연결
-java.sql.Statement - SQL을 담은 내용
-java.sql.ResultSet - SQL 요청 응답
-jdbc드라이버를 이용하여 데이터베이스와 연결한다. jdbc드라이버를 사용하기 위해서는 jdbc드라이버를 로딩해주는 작업이 필요하다.
-인터페이스인 jdbc api를 제공한다. 인터페이스가 이미 정의되어 있기 때문에, 어떤 db벤더든간에 똑같은 방법으로 사용하면 된다.
-jdbc드라이버: 데이터베이스와의 통신을 담당하는 인터페이스. Oracle, MS SQL, MYSQL 등과 같은 데이터베이스에 알맞은 jdbc드라이버를 구현하여 제공. jdbc 드라이버의 구현체를 이용해서 특정 벤터의 데이터베이스에 접근할 수 있음.
+![jdbc표준인터페이스](https://github.com/dlaej/someus.secondproject/blob/main/jdbc%EC%9D%98%20%ED%91%9C%EC%A4%80%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A42.png)
 
-jdbc 동작 흐름 
++ 인터페이스인 jdbc api를 제공한다. 인터페이스가 이미 정의되어 있기 때문에, 어떤 db벤더든간에 똑같은 방법으로 사용하면 된다.
++ jdbc드라이버를 이용하여 데이터베이스와 연결한다. jdbc드라이버를 사용하기 위해서는 jdbc드라이버를 로딩해주는 작업이 필요하다.
++ jdbc드라이버: 데이터베이스와의 통신을 담당하는 인터페이스. Oracle, MS SQL, MYSQL 등과 같은 데이터베이스에 알맞은 jdbc드라이버를 구현하여 제공. jdbc 드라이버의 구현체를 이용해서 특정 벤더의 데이터베이스에 접근할 수 있음.
 
-먼저 jdbc api를 사용하기 위해서는 jdbc드라이버를 먼저 로딩한 후 데이터베이스와 연결해야 한다.
-jdbc드라이버는 jdbc 인터페이스를 구현한 구현체라고 생각할 수 있으며 특정 데이터베이스 벤더(Oracle, Mysql 등)에 대한 연결과 데이터베이스에 대한 작업을 가능하게 해준다. jdbc 드라이버의 구현체를 이용해서 특정 벤더의 데이터베이스에 접근할 수 있음
-jdbc가 제공하는 drivermanager가 드라이버들을 관리하고 connection을 획득하는 기능을 제공한다.
-이 획득한 connection을 통해서 데이터베이스에 sql을 실행하고 결과를 응답받을 수 있다.
+> **jdbc 동작 흐름**
 
-jdbc API 사용 흐름. jdbc를 이용한 프로그래밍 방법. jdbc 클래스의 생성관계
-드라이버 로딩 시 DriverManager라는 객체가 갖고 있는 메서드를 이용해서 드라이버를 로딩한다. 그래서 DriverManager 객체를 이용해서 connection 인스턴스를 얻어내고, connection 인스턴스를 통해서 statement 객체를 얻어내고, statement 객체를 통해 resultset을 얻어낸다. 그래서 닫을 때는 열 때와 반대 순서로 닫아주어야 한다.
+cf)
 
-jdbc드라이버 로딩: 사용하고자 하는 jdbc드라이버를 로딩한다. jdbc드라이버는 DriverManager클래스를 통해 로딩된다. 이 과정이 아까 특정 벤더의 데이터베이스를 선택하는 과정인 것 같다.
++ 먼저 jdbc api를 사용하기 위해서는 jdbc드라이버를 먼저 로딩한 후 데이터베이스와 연결해야 한다.
++ jdbc드라이버는 jdbc 인터페이스를 구현한 구현체라고 생각할 수 있으며 특정 데이터베이스 벤더(Oracle, Mysql 등)에 대한 연결과 데이터베이스에 대한 작업을 가능하게 해준다.
++ jdbc 드라이버의 구현체를 이용해서 특정 벤더의 데이터베이스에 접근할 수 있음
++ jdbc가 제공하는 drivermanager가 드라이버들을 관리하고 connection을 획득하는 기능을 제공한다.
++ 이 획득한 connection을 통해서 데이터베이스에 sql을 실행하고 결과를 응답받을 수 있다.
+
+> **jdbc API 사용 흐름 or jdbc 프로그래밍 방법 or jdbc 클래스의 생성관계**
+
+![DriverManager](https://github.com/dlaej/someus.secondproject/blob/main/drivermanager.png)
+
+1. 드라이버 로딩 시 DriverManager라는 객체가 갖고 있는 메서드를 이용해서 드라이버를 로딩한다.
+2. 그래서 DriverManager 객체를 이용해서 connection 인스턴스를 얻어내고,
+3. connection 인스턴스를 통해서 statement 객체를 얻어내고,
+4. statement 객체를 통해 resultset을 얻어낸다.
+5. 그래서 닫을 때는 열 때와 반대 순서로 닫아주어야 한다.
+
+> jdbc드라이버 로딩: 사용하고자 하는 jdbc드라이버를 로딩한다. jdbc드라이버는 DriverManager클래스를 통해 로딩된다. 이 과정이 아까 특정 벤더의 데이터베이스를 선택하는 과정인 것 같다.
 Connection 객체 생성: jdbc드라이버가 정상적으로 로딩되면 DriverManager를 통해 데이터베이스와 연결되는 session인 Connection 객체를 생성한다.
 Statement 객체 생성: Statement 객체는 작성된 SQL 쿼리문을 실행하기 위한 객체로 정적 SQL쿼리 문자열을 입력으로 가진다. ** session이란?
 Query 실행: 생성된 Statement 객체를 이용하여 입력한 SQL 쿼리를 실행한다.
@@ -52,6 +64,7 @@ Statement 객체 Close
 Connection 객체 Close
 
 순서대로 환경구성. import. 드라이버 로드. connection 얻기. statement 생성 및 질의수행. resultset으로 결과 받기. close.
+
 의존성 추가 (jdbc를 사용하겠다는 것은 db를 사용하겠다는 것임)
 자바코드에서 나랑 다른 패키지에 있는 클래스를 사용하기 위해서 반드시 import해줘야 한다.
 import java.sql.*;
